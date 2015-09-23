@@ -9,7 +9,6 @@ namespace OfficeStruct_Agent_Win.Forms
     public partial class FrmMain : Form
     {
         private string optName;
-        private Options opt;
         private bool checking;
 
         public FrmMain()
@@ -58,7 +57,7 @@ namespace OfficeStruct_Agent_Win.Forms
         private void actEditOptions()
         {
             // Opening settings window
-            using (var frm = new FrmSettings(opt))
+            using (var frm = new FrmSettings())
                 // If user used the save button...
                 if (frm.ShowDialog() == DialogResult.Yes)
                     // ...then we must update app behaviour
@@ -67,13 +66,13 @@ namespace OfficeStruct_Agent_Win.Forms
         private void actReloadOptions()
         {
             tmr.Enabled = false;
-            opt = Options.Load(optName);
+            Shared.Options = Options.Load(optName);
 
             nic.Text = Text;
             nic.Visible = true;
 
-            mnuCheckNow.Enabled = opt.IsValid;
-            tmr.Interval = 1000 *  opt.DelayBetweenChecks;
+            mnuCheckNow.Enabled = Shared.Options.IsValid;
+            tmr.Interval = 1000 * Shared.Options.DelayBetweenChecks;
             tmr.Enabled = true;
         }
         private void PerformCheck()
@@ -89,7 +88,7 @@ namespace OfficeStruct_Agent_Win.Forms
 
                 // If webservice settings are not valid the app shows the user an error.
                 // If user clicks on the bubble, settings window is shown!
-                if (!opt.IsValid)
+                if (!Shared.Options.IsValid)
                 {
                     //nic.Icon = Resources.nicError;
                     nic.ShowBalloonTip(500, Text, "Invalid settings", ToolTipIcon.Error);

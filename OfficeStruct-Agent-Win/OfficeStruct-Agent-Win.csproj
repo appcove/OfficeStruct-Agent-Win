@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\FileQueue.cs" />
     <Compile Include="Classes\Options.cs" />
+    <Compile Include="Classes\Shared.cs" />
     <Compile Include="Classes\Xml.cs" />
     <Compile Include="Controls\CueTextBox.cs">
       <SubType>Component</SubType>
