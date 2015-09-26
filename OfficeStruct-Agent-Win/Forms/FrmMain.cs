@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using OfficeStruct_Agent_Win.Classes;
 
@@ -15,10 +17,8 @@ namespace OfficeStruct_Agent_Win.Forms
         {
             InitializeComponent();
 
-#if !DEBUG
-            // There's a reload context menu item I used in debug time.
-            // If we're not using Debug compilation mode then it's hidden
-            mnuReloadOptions.Visible = false;
+#if DEBUG
+            mnuReloadOptions.Visible = true;
 #endif
         }
         private void FrmMain_Shown(object sender, EventArgs e)
@@ -69,11 +69,51 @@ namespace OfficeStruct_Agent_Win.Forms
             Shared.Options = Options.Load(optName);
 
             nic.Text = Text;
+            nic.Icon = Icon;
             nic.Visible = true;
 
             mnuCheckNow.Enabled = Shared.Options.IsValid;
             tmr.Interval = 1000 * Shared.Options.DelayBetweenChecks;
             tmr.Enabled = true;
+        }
+        private static string GetFileToUpload(string folder)
+        {
+            return Directory.GetFiles(folder)
+                .FirstOrDefault(fname =>
+                {
+                    var name = Path.GetFileName(fname);
+                    return Shared.Options.Exlusions.TrueForAll(e => !name.IsLike(e));
+                });
+        }
+        private bool UploadFile(string upFile)
+        {
+            try
+            {
+                var sha = upFile.ToSha256();
+                // 1. Call API to get upload URL
+                ShowNotification(ToolTipIcon.Info, "Uploading file:\n{0}", upFile);
+                // 2. Upload file (if needed)
+                // 3. Move file
+                var dt = DateTime.Now;
+                var folder = Path.Combine(Path.GetDirectoryName(upFile),
+                    Shared.Options.ArchiveFolderName,
+                    dt.ToString("yyyy-MM"));
+                Directory.CreateDirectory(folder);
+                File.Move(upFile, Path.Combine(folder,
+                    String.Format("{0} {1}", dt.ToString("yyyy-MM-dd-HH-mm-ss"), Path.GetFileName(upFile))));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+        private void ShowNotification(ToolTipIcon icon, string msg, params string[] args)
+        {
+            if (Shared.Options.ShowNotifications)
+                nic.ShowBalloonTip(200, Text, String.Format(msg, args), icon);
         }
         private void PerformCheck()
         {
@@ -91,12 +131,25 @@ namespace OfficeStruct_Agent_Win.Forms
                 if (!Shared.Options.IsValid)
                 {
                     //nic.Icon = Resources.nicError;
-                    nic.ShowBalloonTip(500, Text, "Invalid settings", ToolTipIcon.Error);
+                    ShowNotification(ToolTipIcon.Error, "Invalid settings");
+                    tmr.Enabled = false;
                     return;
                 }
 
                 // Let's perform the check here
-                // do something
+                Shared.Options.FoldersToMonitor.ForEach(folder =>
+                {
+                    var upFile = GetFileToUpload(folder);
+                    while (upFile != null)
+                    {
+                        if (UploadFile(upFile))
+                            ShowNotification(ToolTipIcon.Info, "File uploaded successfully:\n{0}", upFile);
+                        else
+                            ShowNotification(ToolTipIcon.Error, "Cannot upload file:\n{0}", upFile);
+                        Thread.Sleep(200);
+                        upFile = GetFileToUpload(folder);
+                    }
+                });
 
                 // Notification icon is changed to valid one 
                 //nic.Icon = Resources.nicOk;
@@ -117,6 +170,10 @@ namespace OfficeStruct_Agent_Win.Forms
         private void mnuOpenOptions_Click(object sender, EventArgs e)
         {
             actEditOptions();
+        }
+        private void mnuReloadOptions_Click(object sender, EventArgs e)
+        {
+            actReloadOptions();
         }
         private void mnuCheckNow_Click(object sender, EventArgs e)
         {

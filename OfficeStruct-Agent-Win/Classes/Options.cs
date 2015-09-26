@@ -19,10 +19,18 @@ namespace OfficeStruct_Agent_Win.Classes
         public string ApiEndpoint;
         public string AuthorizationKey;
         public List<string> FoldersToMonitor;
+        public string ArchiveFolderName;
+        public List<string> Exlusions;
+        public bool ShowNotifications;
 
         public Options()
         {
             FoldersToMonitor = new List<string>();
+            Exlusions = new List<string>();
+            ArchiveFolderName = "ARCHIVE";
+            DelayBetweenChecks = 10;
+            UploadEnabled = false;
+            ShowNotifications = true;
         }
 
         public bool IsValid
@@ -31,7 +39,8 @@ namespace OfficeStruct_Agent_Win.Classes
             {
                 return !String.IsNullOrEmpty(ApiEndpoint)
                     && !String.IsNullOrEmpty(AuthorizationKey)
-                    && FoldersToMonitor.Any();
+                    && FoldersToMonitor.Any()
+                    && !String.IsNullOrEmpty(ArchiveFolderName);
             }
         }
 
@@ -58,10 +67,13 @@ namespace OfficeStruct_Agent_Win.Classes
             // If file does not exist then a generic options class is created and saved
             var opt = new Options
             {
-                DelayBetweenChecks = 10,
-                UploadEnabled = true,
                 ApiEndpoint = "http://",
                 AuthorizationKey = "aaa",
+                Exlusions = new List<string>(new[]
+                {
+                    "*.tmp",
+                    "~*"
+                })
             };
             opt.Save();
             return opt;

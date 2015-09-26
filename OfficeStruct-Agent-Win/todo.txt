@@ -1,0 +1,44 @@
+﻿1. How the upload flow works:
+a. HTTPS POST to Rest API -> Get back upload URL.
+b. Upload file to upload URL over HTTPS PUT (i think). This is a signed S3 URL with upload permissions.
+c. Move the file into an "ARCHIVE" subfolder
+
+2. I think if we hold the file open while it is uploading (which we need to because of potentially large files) then windows will prevent a move/rename, right?
+
+3. When the app is open, it simply runs the "check for files" loop every several seconds. If any files exist that are not in the excluded list (like ARCHIVE, desktop.ini, thumbs.db, etc...), then pick the eldest file and upload it.
+
+
+-------------------------------------------------------------
+
+Could you run this on a background thread?
+
+while True:
+....if checking_is_not_enabled:
+........sleep(5)
+........continue
+....endif
+....
+....check for eligible file
+....if found:
+........open file for streaming
+........call api
+........upload file
+........close file
+........move file to archive dir
+........sleep for 0.10 seconds
+....else:
+........sleep for 5.00 seconds
+....endif
+endfor
+
+
+-------------------------------------------------------------
+
+1. check if there is an eligible file (the oldest)
+2. if not, then sleep 5 seconds and GOTO 1
+3. open file and calculate SHA256
+4. rewind file pointer
+5. call api and get upload URL
+6. stream file to upload URL
+7. sleep 0.1 seconds
+8. GOTO 1

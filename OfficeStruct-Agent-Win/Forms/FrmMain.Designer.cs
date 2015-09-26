@@ -36,6 +36,7 @@
             this.mnuCheckNow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr = new System.Windows.Forms.Timer(this.components);
+            this.mnuReloadOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.mnu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,10 +49,11 @@
             // 
             this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpenOptions,
+            this.mnuReloadOptions,
             this.mnuCheckNow,
             this.mnuExit});
             this.mnu.Name = "mnu";
-            this.mnu.Size = new System.Drawing.Size(160, 92);
+            this.mnu.Size = new System.Drawing.Size(160, 114);
             // 
             // mnuOpenOptions
             // 
@@ -81,6 +83,14 @@
             // 
             this.tmr.Tick += new System.EventHandler(this.tmr_Tick);
             // 
+            // mnuReloadOptions
+            // 
+            this.mnuReloadOptions.Name = "mnuReloadOptions";
+            this.mnuReloadOptions.Size = new System.Drawing.Size(159, 22);
+            this.mnuReloadOptions.Text = "Reload options";
+            this.mnuReloadOptions.Visible = false;
+            this.mnuReloadOptions.Click += new System.EventHandler(this.mnuReloadOptions_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +115,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuCheckNow;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.Timer tmr;
+        private System.Windows.Forms.ToolStripMenuItem mnuReloadOptions;
     }
 }
 

@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\FileQueue.cs" />
+    <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Classes\Options.cs" />
     <Compile Include="Classes\Shared.cs" />
     <Compile Include="Classes\Xml.cs" />
@@ -98,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
