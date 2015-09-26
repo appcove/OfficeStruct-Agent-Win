@@ -29,8 +29,8 @@ namespace OfficeStruct_Agent_Win.Classes
             Exlusions = new List<string>();
             ArchiveFolderName = "ARCHIVE";
             DelayBetweenChecks = 10;
-            UploadEnabled = false;
-            ShowNotifications = true;
+            UploadEnabled = true;
+            ShowNotifications = false;
         }
 
         public bool IsValid

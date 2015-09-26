@@ -67,6 +67,7 @@ namespace OfficeStruct_Agent_Win.Forms
         {
             tmr.Enabled = false;
             Shared.Options = Options.Load(optName);
+            mnuUpload.Checked = Shared.Options.UploadEnabled;
 
             nic.Text = Text;
             nic.Icon = Icon;
@@ -87,6 +88,7 @@ namespace OfficeStruct_Agent_Win.Forms
         }
         private bool UploadFile(string upFile)
         {
+            if (!Shared.Options.UploadEnabled) return true;
             try
             {
                 var sha = upFile.ToSha256();
@@ -119,6 +121,7 @@ namespace OfficeStruct_Agent_Win.Forms
         {
             // If an old check is still in progress we skip this new one
             if (checking) return;
+            if (!Shared.Options.UploadEnabled) return;
             // App is notified the check is in progress
             checking = true;
             try
@@ -139,6 +142,7 @@ namespace OfficeStruct_Agent_Win.Forms
                 // Let's perform the check here
                 Shared.Options.FoldersToMonitor.ForEach(folder =>
                 {
+                    if (!Shared.Options.UploadEnabled) return;
                     var upFile = GetFileToUpload(folder);
                     while (upFile != null)
                     {
@@ -174,6 +178,11 @@ namespace OfficeStruct_Agent_Win.Forms
         private void mnuReloadOptions_Click(object sender, EventArgs e)
         {
             actReloadOptions();
+        }
+        private void mnuUpload_Click(object sender, EventArgs e)
+        {
+            Shared.Options.UploadEnabled = mnuUpload.Checked;
+            Shared.Options.Save();
         }
         private void mnuCheckNow_Click(object sender, EventArgs e)
         {

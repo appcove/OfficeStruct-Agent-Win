@@ -33,10 +33,11 @@
             this.nic = new System.Windows.Forms.NotifyIcon(this.components);
             this.mnu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuOpenOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuReloadOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCheckNow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr = new System.Windows.Forms.Timer(this.components);
-            this.mnuReloadOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.mnu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,10 +51,11 @@
             this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpenOptions,
             this.mnuReloadOptions,
+            this.mnuUpload,
             this.mnuCheckNow,
             this.mnuExit});
             this.mnu.Name = "mnu";
-            this.mnu.Size = new System.Drawing.Size(160, 114);
+            this.mnu.Size = new System.Drawing.Size(160, 136);
             // 
             // mnuOpenOptions
             // 
@@ -62,6 +64,14 @@
             this.mnuOpenOptions.Size = new System.Drawing.Size(159, 22);
             this.mnuOpenOptions.Text = "Change settings";
             this.mnuOpenOptions.Click += new System.EventHandler(this.mnuOpenOptions_Click);
+            // 
+            // mnuReloadOptions
+            // 
+            this.mnuReloadOptions.Name = "mnuReloadOptions";
+            this.mnuReloadOptions.Size = new System.Drawing.Size(159, 22);
+            this.mnuReloadOptions.Text = "Reload options";
+            this.mnuReloadOptions.Visible = false;
+            this.mnuReloadOptions.Click += new System.EventHandler(this.mnuReloadOptions_Click);
             // 
             // mnuCheckNow
             // 
@@ -83,13 +93,13 @@
             // 
             this.tmr.Tick += new System.EventHandler(this.tmr_Tick);
             // 
-            // mnuReloadOptions
+            // mnuUpload
             // 
-            this.mnuReloadOptions.Name = "mnuReloadOptions";
-            this.mnuReloadOptions.Size = new System.Drawing.Size(159, 22);
-            this.mnuReloadOptions.Text = "Reload options";
-            this.mnuReloadOptions.Visible = false;
-            this.mnuReloadOptions.Click += new System.EventHandler(this.mnuReloadOptions_Click);
+            this.mnuUpload.CheckOnClick = true;
+            this.mnuUpload.Name = "mnuUpload";
+            this.mnuUpload.Size = new System.Drawing.Size(159, 22);
+            this.mnuUpload.Text = "Upload files";
+            this.mnuUpload.Click += new System.EventHandler(this.mnuUpload_Click);
             // 
             // FrmMain
             // 
@@ -116,6 +126,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.Timer tmr;
         private System.Windows.Forms.ToolStripMenuItem mnuReloadOptions;
+        private System.Windows.Forms.ToolStripMenuItem mnuUpload;
     }
 }
 
