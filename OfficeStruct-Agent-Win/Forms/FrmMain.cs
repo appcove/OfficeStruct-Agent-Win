@@ -16,10 +16,6 @@ namespace OfficeStruct_Agent_Win.Forms
         public FrmMain()
         {
             InitializeComponent();
-
-#if DEBUG
-            mnuReloadOptions.Visible = true;
-#endif
         }
         private void FrmMain_Shown(object sender, EventArgs e)
         {
@@ -53,7 +49,12 @@ namespace OfficeStruct_Agent_Win.Forms
             // Notification icon must be removed from traybar
             nic.Visible = false;
         }
-
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == NativeMethods.WM_ONLYONEINSTANCE)
+                ShowNotification(ToolTipIcon.Warning, "Another instance is already running.");
+            base.WndProc(ref m);
+        }
         private void actEditOptions()
         {
             // Opening settings window
@@ -174,10 +175,6 @@ namespace OfficeStruct_Agent_Win.Forms
         private void mnuOpenOptions_Click(object sender, EventArgs e)
         {
             actEditOptions();
-        }
-        private void mnuReloadOptions_Click(object sender, EventArgs e)
-        {
-            actReloadOptions();
         }
         private void mnuUpload_Click(object sender, EventArgs e)
         {

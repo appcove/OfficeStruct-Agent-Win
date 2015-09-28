@@ -33,7 +33,6 @@
             this.nic = new System.Windows.Forms.NotifyIcon(this.components);
             this.mnu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuOpenOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuReloadOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCheckNow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr = new System.Windows.Forms.Timer(this.components);
@@ -50,7 +49,6 @@
             // 
             this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpenOptions,
-            this.mnuReloadOptions,
             this.mnuUpload,
             this.mnuCheckNow,
             this.mnuExit});
@@ -64,14 +62,6 @@
             this.mnuOpenOptions.Size = new System.Drawing.Size(159, 22);
             this.mnuOpenOptions.Text = "Change settings";
             this.mnuOpenOptions.Click += new System.EventHandler(this.mnuOpenOptions_Click);
-            // 
-            // mnuReloadOptions
-            // 
-            this.mnuReloadOptions.Name = "mnuReloadOptions";
-            this.mnuReloadOptions.Size = new System.Drawing.Size(159, 22);
-            this.mnuReloadOptions.Text = "Reload options";
-            this.mnuReloadOptions.Visible = false;
-            this.mnuReloadOptions.Click += new System.EventHandler(this.mnuReloadOptions_Click);
             // 
             // mnuCheckNow
             // 
@@ -125,7 +115,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuCheckNow;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.Timer tmr;
-        private System.Windows.Forms.ToolStripMenuItem mnuReloadOptions;
         private System.Windows.Forms.ToolStripMenuItem mnuUpload;
     }
 }
