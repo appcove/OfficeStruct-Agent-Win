@@ -52,7 +52,7 @@ namespace OfficeStruct_Agent_Win.Forms
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == NativeMethods.WM_ONLYONEINSTANCE)
-                ShowNotification(ToolTipIcon.Warning, "Another instance is already running");
+                nic.ShowBalloonTip(200, Text, "Another instance is already running", ToolTipIcon.Warning);
             base.WndProc(ref m);
         }
         private void actEditOptions()
