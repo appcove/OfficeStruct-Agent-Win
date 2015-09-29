@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btnAddFolder.png" />
-    <None Include="bin\Debug\OfficeStruct-Agent-Win.exe" />
+    <Content Include="bin\Debug\OfficeStruct-Agent-Win.exe" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
