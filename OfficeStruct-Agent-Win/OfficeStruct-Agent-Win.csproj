@@ -102,7 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btnAddFolder.png" />
+    <None Include="bin\Debug\OfficeStruct-Agent-Win.exe" />
     <Content Include="todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
