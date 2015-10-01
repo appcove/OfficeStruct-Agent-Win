@@ -13,35 +13,26 @@ namespace OfficeStruct_Agent_Win.Classes
     public class Options
     {
         private static string fname;
+        private bool uploadEnabled;
 
-        public int DelayBetweenChecks;
-        public bool UploadEnabled;
-        public string ApiEndpoint;
-        public string AuthorizationKey;
-        public List<string> FoldersToMonitor;
-        public string ArchiveFolderName;
-        public List<string> Exlusions;
+        public List<MonitoredFolder> Folders;
         public bool ShowNotifications;
+
+        public bool UploadEnabled
+        {
+            get { return uploadEnabled; }
+            set
+            {
+                uploadEnabled = value;
+                Folders.ForEach(f => f.UploadEnabled = value);
+            }
+        }
 
         public Options()
         {
-            FoldersToMonitor = new List<string>();
-            Exlusions = new List<string>();
-            ArchiveFolderName = "ARCHIVE";
-            DelayBetweenChecks = 10;
-            UploadEnabled = true;
+            Folders = new List<MonitoredFolder>();
             ShowNotifications = false;
-        }
-
-        public bool IsValid
-        {
-            get
-            {
-                return !String.IsNullOrEmpty(ApiEndpoint)
-                    && !String.IsNullOrEmpty(AuthorizationKey)
-                    && FoldersToMonitor.Any()
-                    && !String.IsNullOrEmpty(ArchiveFolderName);
-            }
+            UploadEnabled = true;
         }
 
         /// <summary>
@@ -65,16 +56,7 @@ namespace OfficeStruct_Agent_Win.Classes
                 }
 
             // If file does not exist then a generic options class is created and saved
-            var opt = new Options
-            {
-                ApiEndpoint = "http://",
-                AuthorizationKey = "aaa",
-                Exlusions = new List<string>(new[]
-                {
-                    "*.tmp",
-                    "~*"
-                })
-            };
+            var opt = new Options();
             opt.Save();
             return opt;
         }
