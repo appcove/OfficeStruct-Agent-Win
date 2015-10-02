@@ -72,6 +72,7 @@
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
@@ -110,6 +111,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btnAddFolder.png" />
+    <None Include="Resources\btnClear.png" />
+    <None Include="Resources\btnDelete.png" />
+    <None Include="Resources\btnSave.png" />
+    <None Include="Resources\btnFolder.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup />

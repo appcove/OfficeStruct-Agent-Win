@@ -35,8 +35,6 @@
             this.mnuOpenOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCheckNow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmr = new System.Windows.Forms.Timer(this.components);
-            this.mnuUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.mnu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,11 +47,10 @@
             // 
             this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpenOptions,
-            this.mnuUpload,
             this.mnuCheckNow,
             this.mnuExit});
             this.mnu.Name = "mnu";
-            this.mnu.Size = new System.Drawing.Size(160, 136);
+            this.mnu.Size = new System.Drawing.Size(160, 92);
             // 
             // mnuOpenOptions
             // 
@@ -79,18 +76,6 @@
             this.mnuExit.Text = "Exit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
-            // tmr
-            // 
-            this.tmr.Tick += new System.EventHandler(this.tmr_Tick);
-            // 
-            // mnuUpload
-            // 
-            this.mnuUpload.CheckOnClick = true;
-            this.mnuUpload.Name = "mnuUpload";
-            this.mnuUpload.Size = new System.Drawing.Size(159, 22);
-            this.mnuUpload.Text = "Upload files";
-            this.mnuUpload.Click += new System.EventHandler(this.mnuUpload_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,8 +99,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuOpenOptions;
         private System.Windows.Forms.ToolStripMenuItem mnuCheckNow;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
-        private System.Windows.Forms.Timer tmr;
-        private System.Windows.Forms.ToolStripMenuItem mnuUpload;
     }
 }
 

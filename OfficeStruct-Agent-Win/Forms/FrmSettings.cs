@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using OfficeStruct_Agent_Win.Classes;
@@ -7,51 +9,131 @@ namespace OfficeStruct_Agent_Win.Forms
 {
     public partial class FrmSettings : Form
     {
+        private readonly List<MonitoredFolder> items = new List<MonitoredFolder>();
+
         public FrmSettings()
         {
             InitializeComponent();
 
             var opt = Shared.Options;
-            udDelay.Value = Math.Min(Math.Max(udDelay.Minimum, opt.DelayBetweenChecks), udDelay.Maximum);
-            txtApiEndpoint.Text = opt.ApiEndpoint;
-            txtAuthorizationKey.Text = opt.AuthorizationKey;
-            txtArchiveFolder.Text = opt.ArchiveFolderName;
-            chkNotifications.Checked = opt.ShowNotifications;
-            txtFolders.Text = String.Join(Environment.NewLine, opt.FoldersToMonitor);
-            txtExclusions.Text = String.Join(Environment.NewLine, opt.Exlusions);
+            items = Xml.Deserialize<List<MonitoredFolder>>(Xml.Serialize(opt.Folders));
+            UpdateList();
+        }
+
+        private void UpdateButtons()
+        {
+            var item = lv.SelectedObject as MonitoredFolder;
+            btnAdd.Enabled = true;
+            btnRemove.Enabled = item != null;
+            btnClear.Enabled = items.Any();
+            btnSave.Enabled = items.Any();
+        }
+        private void UpdateList(MonitoredFolder item = null)
+        {
+            lv.SetObjects(items);
+            if (item != null) lv.EnsureModelVisible(item);
+        }
+        private void ClearItemData()
+        {
+            txtFolder.Text = "";
+            udDelay.Value = udDelay.Minimum;
+            txtApiEndpoint.Text = "";
+            txtAuthorizationKey.Text = "";
+            txtArchiveFolder.Text = @"ARCHIVE";
+            txtExclusions.Text = "";
+        }
+        private void NewItem()
+        {
+            lv.SelectedObject = null;
+            ClearItemData();
+            txtFolder.Focus();
+        }
+
+        private void lv_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateButtons();
+            ClearItemData();
+            var item = lv.SelectedObject as MonitoredFolder;
+            if (item == null) return;
+
+            txtFolder.Text = item.Folder;
+            udDelay.Value = Math.Min(Math.Max(udDelay.Minimum, item.DelayBetweenChecks), udDelay.Maximum);
+            txtApiEndpoint.Text = item.ApiEndpoint;
+            txtAuthorizationKey.Text = item.AuthorizationKey;
+            txtArchiveFolder.Text = item.ArchiveFolderName;
+            txtExclusions.Text = String.Join(Environment.NewLine, item.Exclusions);
+        }
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            NewItem();
+        }
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            var item = lv.SelectedObject as MonitoredFolder;
+            if (item == null) return;
+            items.Remove(item);
+            UpdateList();
+            lv.SelectedObject = items.FirstOrDefault();
+        }
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                @"Are you sure you want to clear all items?", Text,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            items.Clear();
+            UpdateList();
         }
 
         private void DataChanged(object sender, EventArgs e)
         {
             btnSave.Enabled =
-                !String.IsNullOrEmpty(txtApiEndpoint.Text)
+                !String.IsNullOrEmpty(txtFolder.Text)
+                && Directory.Exists(txtFolder.Text)
+                && !String.IsNullOrEmpty(txtApiEndpoint.Text)
                 && !String.IsNullOrEmpty(txtAuthorizationKey.Text)
-                && !String.IsNullOrEmpty(txtArchiveFolder.Text)
-                && !String.IsNullOrEmpty(txtFolders.Text);
+                && !String.IsNullOrEmpty(txtArchiveFolder.Text);
         }
         private void btnAddFolder_Click(object sender, EventArgs e)
         {
             using (var dlg = new FolderBrowserDialog
             {
-                Description = @"Select folder to include",
+                Description = @"Select folder to monitor",
                 ShowNewFolderButton = true,
+                SelectedPath = txtFolder.Text,
             })
             {
                 if (dlg.ShowDialog() != DialogResult.OK) return;
-                if (txtFolders.Text.Length > 0)
-                    txtFolders.Text += Environment.NewLine;
-                txtFolders.Text += dlg.SelectedPath;
+                txtFolder.Text = dlg.SelectedPath;
             }
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
+            var item = lv.SelectedObject as MonitoredFolder;
+            if (item == null)
+            {
+                item = new MonitoredFolder();
+                items.Add(item);
+                UpdateList(item);
+                UpdateButtons();
+            }
+
+            item.Folder = txtFolder.Text;
+            item.DelayBetweenChecks = (int)udDelay.Value;
+            item.ApiEndpoint = txtApiEndpoint.Text;
+            item.AuthorizationKey = txtAuthorizationKey.Text;
+            item.ArchiveFolderName = txtArchiveFolder.Text;
+            item.Exclusions = txtExclusions.Lines
+                .Where(l => !String.IsNullOrEmpty(l))
+                .ToList();
+            NewItem();
+        }
+
+        private void btnUpdateOptions_Click(object sender, EventArgs e)
+        {
             var opt = Shared.Options;
-            opt.ApiEndpoint = txtApiEndpoint.Text;
-            opt.AuthorizationKey = txtAuthorizationKey.Text;
-            opt.ArchiveFolderName = txtArchiveFolder.Text;
-            opt.ShowNotifications = chkNotifications.Checked;
-            opt.FoldersToMonitor = txtFolders.Lines.ToList();
-            opt.Exlusions = txtExclusions.Lines.ToList();
+            opt.Folders.ForEach(f => f.Stop());
+            opt.Folders.Clear();
+            opt.Folders.AddRange(items);
             Shared.Options.Save();
         }
     }

@@ -18,21 +18,10 @@ namespace OfficeStruct_Agent_Win.Classes
         public List<MonitoredFolder> Folders;
         public bool ShowNotifications;
 
-        public bool UploadEnabled
-        {
-            get { return uploadEnabled; }
-            set
-            {
-                uploadEnabled = value;
-                Folders.ForEach(f => f.UploadEnabled = value);
-            }
-        }
-
         public Options()
         {
             Folders = new List<MonitoredFolder>();
             ShowNotifications = false;
-            UploadEnabled = true;
         }
 
         /// <summary>

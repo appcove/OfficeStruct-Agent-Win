@@ -1,7 +1,7 @@
 ﻿1. change settings window so that there are only a list of folders with space below.
 2. adding a folder pops up a folder select dialog
 3. when a folder is selected, it displays the options FOR THAT FOLDER below or beside
-4. each folder has its own settings (Endpoint, API Key, Check Interval, Enabled)
+OK	4. each folder has its own settings (Endpoint, API Key, Check Interval, Enabled)
 5. save on the dialog will save EVERYTHING at once.
 6. cancel on the dialog will not save anything
-7. change the datetime format to "YYYYMMDDHHIISS <filename>"
+OK	7. change the datetime format to "YYYYMMDDHHIISS <filename>"
