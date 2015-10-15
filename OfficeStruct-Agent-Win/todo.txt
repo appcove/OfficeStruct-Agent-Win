@@ -1,8 +1,8 @@
 ﻿Here are the requirements (see attached).
 
-1. changes to settings dialog (attachment), and:
+OK	1. changes to settings dialog (attachment), and:
 
-1.1. change the default check interval to 5 seconds.
+OK	1.1. change the default check interval to 5 seconds.
 1.2 Let's add a Log Folder Name option to the folder settings (default it to "LOG")
 1.3 Let's add a 'Log Level' option dropdown (Debug, Normal, Off)
 

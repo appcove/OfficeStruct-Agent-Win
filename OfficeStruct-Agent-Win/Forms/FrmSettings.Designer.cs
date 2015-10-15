@@ -46,13 +46,19 @@
             this.colFolder = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pnl = new System.Windows.Forms.Panel();
             this.btnAddFolder = new System.Windows.Forms.Button();
-            this.txtFolder = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnUpdateOptions = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chkUploadToWebservice = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cboLevel = new System.Windows.Forms.ComboBox();
+            this.txtLogFolder = new OfficeStruct_Agent_Win.Controls.CueTextBox();
+            this.txtFolder = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.txtArchiveFolder = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.txtAuthorizationKey = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.txtApiEndpoint = new OfficeStruct_Agent_Win.Controls.CueTextBox();
-            this.btnUpdateOptions = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.udDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lv)).BeginInit();
             this.pnl.SuspendLayout();
@@ -60,7 +66,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(5, 93);
+            this.label4.Location = new System.Drawing.Point(5, 120);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(142, 13);
             this.label4.TabIndex = 7;
@@ -69,7 +75,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(5, 65);
+            this.label3.Location = new System.Drawing.Point(5, 92);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(142, 13);
             this.label3.TabIndex = 5;
@@ -78,7 +84,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(5, 37);
+            this.label2.Location = new System.Drawing.Point(5, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 13);
             this.label2.TabIndex = 3;
@@ -87,7 +93,7 @@
             // 
             // udDelay
             // 
-            this.udDelay.Location = new System.Drawing.Point(153, 189);
+            this.udDelay.Location = new System.Drawing.Point(153, 33);
             this.udDelay.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -109,7 +115,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(4, 191);
+            this.label1.Location = new System.Drawing.Point(3, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(142, 13);
             this.label1.TabIndex = 11;
@@ -129,7 +135,7 @@
             // 
             this.txtExclusions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtExclusions.Location = new System.Drawing.Point(153, 120);
+            this.txtExclusions.Location = new System.Drawing.Point(153, 147);
             this.txtExclusions.Multiline = true;
             this.txtExclusions.Name = "txtExclusions";
             this.txtExclusions.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -141,7 +147,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(68, 123);
+            this.label6.Location = new System.Drawing.Point(68, 150);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 13);
             this.label6.TabIndex = 9;
@@ -211,7 +217,7 @@
             this.lv.Name = "lv";
             this.lv.ShowFilterMenuOnRightClick = false;
             this.lv.ShowGroups = false;
-            this.lv.Size = new System.Drawing.Size(537, 121);
+            this.lv.Size = new System.Drawing.Size(537, 123);
             this.lv.TabIndex = 24;
             this.lv.UseAlternatingBackColors = true;
             this.lv.UseCompatibleStateImageBehavior = false;
@@ -229,6 +235,11 @@
             // 
             this.pnl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnl.Controls.Add(this.cboLevel);
+            this.pnl.Controls.Add(this.label9);
+            this.pnl.Controls.Add(this.chkUploadToWebservice);
+            this.pnl.Controls.Add(this.txtLogFolder);
+            this.pnl.Controls.Add(this.label8);
             this.pnl.Controls.Add(this.btnAddFolder);
             this.pnl.Controls.Add(this.txtFolder);
             this.pnl.Controls.Add(this.label7);
@@ -243,9 +254,9 @@
             this.pnl.Controls.Add(this.label2);
             this.pnl.Controls.Add(this.udDelay);
             this.pnl.Controls.Add(this.label1);
-            this.pnl.Location = new System.Drawing.Point(12, 152);
+            this.pnl.Location = new System.Drawing.Point(12, 154);
             this.pnl.Name = "pnl";
-            this.pnl.Size = new System.Drawing.Size(584, 230);
+            this.pnl.Size = new System.Drawing.Size(584, 304);
             this.pnl.TabIndex = 25;
             // 
             // btnAddFolder
@@ -263,17 +274,6 @@
             this.btnAddFolder.UseMnemonic = false;
             this.btnAddFolder.UseVisualStyleBackColor = true;
             this.btnAddFolder.Click += new System.EventHandler(this.btnAddFolder_Click);
-            // 
-            // txtFolder
-            // 
-            this.txtFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFolder.CueText = "";
-            this.txtFolder.Location = new System.Drawing.Point(153, 6);
-            this.txtFolder.Name = "txtFolder";
-            this.txtFolder.Size = new System.Drawing.Size(384, 22);
-            this.txtFolder.TabIndex = 1;
-            this.txtFolder.TextChanged += new System.EventHandler(this.DataChanged);
             // 
             // label7
             // 
@@ -293,7 +293,7 @@
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnSave.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnSave;
-            this.btnSave.Location = new System.Drawing.Point(396, 189);
+            this.btnSave.Location = new System.Drawing.Point(396, 263);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(171, 36);
             this.btnSave.TabIndex = 13;
@@ -303,12 +303,105 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnClose.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnDiscardAndClose;
+            this.btnClose.Location = new System.Drawing.Point(289, 464);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(193, 72);
+            this.btnClose.TabIndex = 28;
+            this.btnClose.Text = "DISCARD CHANGES AND EXIT";
+            this.btnClose.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnUpdateOptions
+            // 
+            this.btnUpdateOptions.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnUpdateOptions.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.btnUpdateOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnUpdateOptions.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnUpdate;
+            this.btnUpdateOptions.Location = new System.Drawing.Point(117, 464);
+            this.btnUpdateOptions.Name = "btnUpdateOptions";
+            this.btnUpdateOptions.Size = new System.Drawing.Size(138, 72);
+            this.btnUpdateOptions.TabIndex = 9;
+            this.btnUpdateOptions.Text = "UPDATE OPTIONS";
+            this.btnUpdateOptions.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUpdateOptions.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnUpdateOptions.UseVisualStyleBackColor = true;
+            this.btnUpdateOptions.Click += new System.EventHandler(this.btnUpdateOptions_Click);
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(5, 220);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(142, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Log folder name";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // chkUploadToWebservice
+            // 
+            this.chkUploadToWebservice.AutoSize = true;
+            this.chkUploadToWebservice.Location = new System.Drawing.Point(241, 36);
+            this.chkUploadToWebservice.Name = "chkUploadToWebservice";
+            this.chkUploadToWebservice.Size = new System.Drawing.Size(137, 17);
+            this.chkUploadToWebservice.TabIndex = 16;
+            this.chkUploadToWebservice.Text = "Upload to webservice";
+            this.chkUploadToWebservice.UseVisualStyleBackColor = true;
+            this.chkUploadToWebservice.CheckedChanged += new System.EventHandler(this.chkUploadToWebservice_CheckedChanged);
+            // 
+            // label9
+            // 
+            this.label9.Location = new System.Drawing.Point(3, 250);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(142, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Log level";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // cboLevel
+            // 
+            this.cboLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLevel.FormattingEnabled = true;
+            this.cboLevel.Location = new System.Drawing.Point(153, 247);
+            this.cboLevel.Name = "cboLevel";
+            this.cboLevel.Size = new System.Drawing.Size(121, 21);
+            this.cboLevel.TabIndex = 18;
+            this.cboLevel.SelectedIndexChanged += new System.EventHandler(this.DataChanged);
+            // 
+            // txtLogFolder
+            // 
+            this.txtLogFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLogFolder.CueText = "";
+            this.txtLogFolder.Location = new System.Drawing.Point(153, 217);
+            this.txtLogFolder.Name = "txtLogFolder";
+            this.txtLogFolder.Size = new System.Drawing.Size(414, 22);
+            this.txtLogFolder.TabIndex = 15;
+            this.txtLogFolder.TextChanged += new System.EventHandler(this.DataChanged);
+            // 
+            // txtFolder
+            // 
+            this.txtFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFolder.CueText = "";
+            this.txtFolder.Location = new System.Drawing.Point(153, 6);
+            this.txtFolder.Name = "txtFolder";
+            this.txtFolder.Size = new System.Drawing.Size(384, 22);
+            this.txtFolder.TabIndex = 1;
+            this.txtFolder.TextChanged += new System.EventHandler(this.DataChanged);
+            // 
             // txtArchiveFolder
             // 
             this.txtArchiveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtArchiveFolder.CueText = "";
-            this.txtArchiveFolder.Location = new System.Drawing.Point(153, 90);
+            this.txtArchiveFolder.Location = new System.Drawing.Point(153, 117);
             this.txtArchiveFolder.Name = "txtArchiveFolder";
             this.txtArchiveFolder.Size = new System.Drawing.Size(414, 22);
             this.txtArchiveFolder.TabIndex = 8;
@@ -319,7 +412,7 @@
             this.txtAuthorizationKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAuthorizationKey.CueText = "";
-            this.txtAuthorizationKey.Location = new System.Drawing.Point(153, 62);
+            this.txtAuthorizationKey.Location = new System.Drawing.Point(153, 89);
             this.txtAuthorizationKey.Name = "txtAuthorizationKey";
             this.txtAuthorizationKey.Size = new System.Drawing.Size(414, 22);
             this.txtAuthorizationKey.TabIndex = 6;
@@ -330,33 +423,18 @@
             this.txtApiEndpoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtApiEndpoint.CueText = "";
-            this.txtApiEndpoint.Location = new System.Drawing.Point(153, 34);
+            this.txtApiEndpoint.Location = new System.Drawing.Point(153, 61);
             this.txtApiEndpoint.Name = "txtApiEndpoint";
             this.txtApiEndpoint.Size = new System.Drawing.Size(414, 22);
             this.txtApiEndpoint.TabIndex = 4;
             this.txtApiEndpoint.TextChanged += new System.EventHandler(this.DataChanged);
             // 
-            // btnUpdateOptions
-            // 
-            this.btnUpdateOptions.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnUpdateOptions.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.btnUpdateOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnUpdateOptions.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnUpdate;
-            this.btnUpdateOptions.Location = new System.Drawing.Point(222, 388);
-            this.btnUpdateOptions.Name = "btnUpdateOptions";
-            this.btnUpdateOptions.Size = new System.Drawing.Size(138, 72);
-            this.btnUpdateOptions.TabIndex = 9;
-            this.btnUpdateOptions.Text = "UPDATE OPTIONS";
-            this.btnUpdateOptions.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnUpdateOptions.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnUpdateOptions.UseVisualStyleBackColor = true;
-            this.btnUpdateOptions.Click += new System.EventHandler(this.btnUpdateOptions_Click);
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 462);
+            this.ClientSize = new System.Drawing.Size(591, 538);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.pnl);
@@ -403,5 +481,11 @@
         private Controls.CueTextBox txtFolder;
         private System.Windows.Forms.Label label7;
         private BrightIdeasSoftware.OLVColumn colFolder;
+        private System.Windows.Forms.Button btnClose;
+        private Controls.CueTextBox txtLogFolder;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox chkUploadToWebservice;
+        private System.Windows.Forms.ComboBox cboLevel;
+        private System.Windows.Forms.Label label9;
     }
 }

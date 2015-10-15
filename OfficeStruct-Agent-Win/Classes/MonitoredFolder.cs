@@ -10,6 +10,13 @@ using Timer = System.Timers.Timer;
 
 namespace OfficeStruct_Agent_Win.Classes
 {
+    public enum LogLevel
+    {
+        Off,
+        Normal,
+        Debug
+    }
+
     public class MonitoredFolder : INotifyPropertyChanged
     {
         private bool checking;
@@ -33,13 +40,20 @@ namespace OfficeStruct_Agent_Win.Classes
         public string ArchiveFolderName;
         public List<string> Exclusions;
         public int DelayBetweenChecks;
+        public bool UploadToWebservice;
+        public string LogFolderName;
+        public LogLevel LogLevel;
 
         public MonitoredFolder()
         {
+            UploadEnabled = true;
+
             Exclusions = new List<string>();
             ArchiveFolderName = "ARCHIVE";
+            LogFolderName = "LOG";
             DelayBetweenChecks = 5;
-            UploadEnabled = true;
+            UploadToWebservice = true;
+            LogLevel = LogLevel.Normal;
         }
 
         private string GetFileToUpload(string folder)
@@ -82,10 +96,12 @@ namespace OfficeStruct_Agent_Win.Classes
             get
             {
                 return !String.IsNullOrEmpty(Folder)
-                    && Directory.Exists(Folder)
-                    && !String.IsNullOrEmpty(ApiEndpoint)
-                    && !String.IsNullOrEmpty(AuthorizationKey)
-                    && !String.IsNullOrEmpty(ArchiveFolderName);
+                       && Directory.Exists(Folder)
+                       && (UploadToWebservice == false ||
+                           (!String.IsNullOrEmpty(ApiEndpoint)
+                            && !String.IsNullOrEmpty(AuthorizationKey)))
+                       && ArchiveFolderName.IsValidFilename()
+                       && (LogLevel == LogLevel.Off || LogFolderName.IsValidFilename());
             }
         }
         internal void PerformCheck()

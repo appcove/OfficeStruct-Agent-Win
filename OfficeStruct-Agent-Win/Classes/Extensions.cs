@@ -28,5 +28,11 @@ namespace OfficeStruct_Agent_Win.Classes
                 return BitConverter.ToString(checksum).Replace("-", String.Empty);
             }
         }
+        public static bool IsValidFilename(this string filename)
+        {
+            if (String.IsNullOrEmpty(filename)) return false;
+            var invChars = Path.GetInvalidFileNameChars();
+            return !filename.Any(c => Array.IndexOf(invChars, c) >= 0);
+        }
     }
 }

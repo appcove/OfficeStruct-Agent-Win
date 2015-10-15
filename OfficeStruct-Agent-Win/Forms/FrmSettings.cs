@@ -10,7 +10,6 @@ namespace OfficeStruct_Agent_Win.Forms
     public partial class FrmSettings : Form
     {
         private readonly List<MonitoredFolder> items = new List<MonitoredFolder>();
-        private readonly char[] invChars = Path.GetInvalidFileNameChars();
 
         public FrmSettings()
         {
@@ -19,6 +18,7 @@ namespace OfficeStruct_Agent_Win.Forms
             var opt = Shared.Options;
             items = Xml.Deserialize<List<MonitoredFolder>>(Xml.Serialize(opt.Folders));
             UpdateList();
+            cboLevel.DataSource = Enum.GetValues(typeof (LogLevel));
         }
 
         private void UpdateButtons()
@@ -39,6 +39,7 @@ namespace OfficeStruct_Agent_Win.Forms
         {
             txtFolder.Text = "";
             udDelay.Value = 5;
+            chkUploadToWebservice.Enabled = true;
             txtApiEndpoint.Text = "";
             txtAuthorizationKey.Text = "";
             txtArchiveFolder.Text = @"ARCHIVE";
@@ -46,6 +47,8 @@ namespace OfficeStruct_Agent_Win.Forms
                 "Thumbs.db",
                 "desktop.ini",
                 "*.tmp");
+            txtLogFolder.Text = @"LOG";
+            cboLevel.SelectedValue = LogLevel.Off;
         }
         private void NewItem()
         {
@@ -66,10 +69,13 @@ namespace OfficeStruct_Agent_Win.Forms
 
             txtFolder.Text = item.Folder;
             udDelay.Value = Math.Min(Math.Max(udDelay.Minimum, item.DelayBetweenChecks), udDelay.Maximum);
+            chkUploadToWebservice.Checked = item.UploadToWebservice;
             txtApiEndpoint.Text = item.ApiEndpoint;
             txtAuthorizationKey.Text = item.AuthorizationKey;
             txtArchiveFolder.Text = item.ArchiveFolderName;
             txtExclusions.Text = String.Join(Environment.NewLine, item.Exclusions);
+            txtLogFolder.Text = item.LogFolderName;
+            cboLevel.SelectedValue = item.LogLevel;
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -97,11 +103,18 @@ namespace OfficeStruct_Agent_Win.Forms
             btnSave.Enabled =
                 !String.IsNullOrEmpty(txtFolder.Text)
                 && Directory.Exists(txtFolder.Text)
-                && !String.IsNullOrEmpty(txtApiEndpoint.Text)
-                && (txtApiEndpoint.Text.StartsWith("http://") || txtApiEndpoint.Text.StartsWith("https://"))
-                && !String.IsNullOrEmpty(txtAuthorizationKey.Text)
-                && !String.IsNullOrEmpty(txtArchiveFolder.Text)
-                && !txtArchiveFolder.Text.Any(c => Array.IndexOf(invChars, c) >= 0);
+                && (!chkUploadToWebservice.Checked ||
+                    (!String.IsNullOrEmpty(txtApiEndpoint.Text)
+                     && (txtApiEndpoint.Text.StartsWith("http://") || txtApiEndpoint.Text.StartsWith("https://"))
+                && !String.IsNullOrEmpty(txtAuthorizationKey.Text)))
+                && txtArchiveFolder.Text.IsValidFilename()
+                && ((LogLevel)cboLevel.SelectedItem == LogLevel.Off || txtLogFolder.Text.IsValidFilename());
+        }
+        private void chkUploadToWebservice_CheckedChanged(object sender, EventArgs e)
+        {
+            txtApiEndpoint.Enabled = chkUploadToWebservice.Checked;
+            txtAuthorizationKey.Enabled = chkUploadToWebservice.Checked;
+            DataChanged(sender, e);
         }
         private void btnAddFolder_Click(object sender, EventArgs e)
         {
@@ -146,5 +159,10 @@ namespace OfficeStruct_Agent_Win.Forms
             opt.Folders.AddRange(items);
             Shared.Options.Save();
         }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
     }
 }

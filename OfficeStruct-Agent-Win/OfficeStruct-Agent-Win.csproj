@@ -115,6 +115,7 @@
     <None Include="Resources\btnDelete.png" />
     <None Include="Resources\btnSave.png" />
     <None Include="Resources\btnFolder.png" />
+    <None Include="Resources\btnDiscardAndClose.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup />
