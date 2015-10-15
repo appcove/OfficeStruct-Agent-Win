@@ -10,6 +10,7 @@ namespace OfficeStruct_Agent_Win.Forms
     public partial class FrmSettings : Form
     {
         private readonly List<MonitoredFolder> items = new List<MonitoredFolder>();
+        private readonly char[] invChars = Path.GetInvalidFileNameChars();
 
         public FrmSettings()
         {
@@ -31,21 +32,27 @@ namespace OfficeStruct_Agent_Win.Forms
         private void UpdateList(MonitoredFolder item = null)
         {
             lv.SetObjects(items);
+            pnl.Enabled = item != null;
             if (item != null) lv.EnsureModelVisible(item);
         }
         private void ClearItemData()
         {
             txtFolder.Text = "";
-            udDelay.Value = udDelay.Minimum;
+            udDelay.Value = 5;
             txtApiEndpoint.Text = "";
             txtAuthorizationKey.Text = "";
             txtArchiveFolder.Text = @"ARCHIVE";
-            txtExclusions.Text = "";
+            txtExclusions.Text = String.Join(Environment.NewLine,
+                "Thumbs.db",
+                "desktop.ini",
+                "*.tmp");
         }
         private void NewItem()
         {
             lv.SelectedObject = null;
+            pnl.Enabled = true;
             ClearItemData();
+
             txtFolder.Focus();
         }
 
@@ -54,6 +61,7 @@ namespace OfficeStruct_Agent_Win.Forms
             UpdateButtons();
             ClearItemData();
             var item = lv.SelectedObject as MonitoredFolder;
+            pnl.Enabled = item != null;
             if (item == null) return;
 
             txtFolder.Text = item.Folder;
@@ -90,8 +98,10 @@ namespace OfficeStruct_Agent_Win.Forms
                 !String.IsNullOrEmpty(txtFolder.Text)
                 && Directory.Exists(txtFolder.Text)
                 && !String.IsNullOrEmpty(txtApiEndpoint.Text)
+                && (txtApiEndpoint.Text.StartsWith("http://") || txtApiEndpoint.Text.StartsWith("https://"))
                 && !String.IsNullOrEmpty(txtAuthorizationKey.Text)
-                && !String.IsNullOrEmpty(txtArchiveFolder.Text);
+                && !String.IsNullOrEmpty(txtArchiveFolder.Text)
+                && !txtArchiveFolder.Text.Any(c => Array.IndexOf(invChars, c) >= 0);
         }
         private void btnAddFolder_Click(object sender, EventArgs e)
         {
@@ -125,7 +135,7 @@ namespace OfficeStruct_Agent_Win.Forms
             item.Exclusions = txtExclusions.Lines
                 .Where(l => !String.IsNullOrEmpty(l))
                 .ToList();
-            NewItem();
+            //NewItem();
         }
 
         private void btnUpdateOptions_Click(object sender, EventArgs e)

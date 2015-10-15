@@ -38,7 +38,7 @@ namespace OfficeStruct_Agent_Win.Classes
         {
             Exclusions = new List<string>();
             ArchiveFolderName = "ARCHIVE";
-            DelayBetweenChecks = 10;
+            DelayBetweenChecks = 5;
             UploadEnabled = true;
         }
 

@@ -39,19 +39,19 @@
             this.txtExclusions = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.lv = new BrightIdeasSoftware.ObjectListView();
             this.colFolder = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pnl = new System.Windows.Forms.Panel();
+            this.btnAddFolder = new System.Windows.Forms.Button();
             this.txtFolder = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
             this.txtArchiveFolder = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.txtAuthorizationKey = new OfficeStruct_Agent_Win.Controls.CueTextBox();
             this.txtApiEndpoint = new OfficeStruct_Agent_Win.Controls.CueTextBox();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnRemove = new System.Windows.Forms.Button();
-            this.btnAddFolder = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
             this.btnUpdateOptions = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.udDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lv)).BeginInit();
@@ -94,7 +94,7 @@
             0,
             0});
             this.udDelay.Minimum = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -102,7 +102,7 @@
             this.udDelay.Size = new System.Drawing.Size(64, 22);
             this.udDelay.TabIndex = 12;
             this.udDelay.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -146,6 +146,55 @@
             this.label6.Size = new System.Drawing.Size(78, 13);
             this.label6.TabIndex = 9;
             this.label6.Text = "Exclusions list";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnClear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnClear;
+            this.btnClear.Location = new System.Drawing.Point(555, 84);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(24, 24);
+            this.btnClear.TabIndex = 27;
+            this.tip.SetToolTip(this.btnClear, "Remove ALL folders");
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemove.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnRemove.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnRemove.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemove.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnDelete;
+            this.btnRemove.Location = new System.Drawing.Point(555, 54);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(24, 24);
+            this.btnRemove.TabIndex = 26;
+            this.tip.SetToolTip(this.btnRemove, "Remove selected folder");
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnAddFolder;
+            this.btnAdd.Location = new System.Drawing.Point(555, 25);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(24, 24);
+            this.btnAdd.TabIndex = 23;
+            this.tip.SetToolTip(this.btnAdd, "Add a new folder");
+            this.btnAdd.UseMnemonic = false;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // lv
             // 
@@ -199,6 +248,22 @@
             this.pnl.Size = new System.Drawing.Size(584, 230);
             this.pnl.TabIndex = 25;
             // 
+            // btnAddFolder
+            // 
+            this.btnAddFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddFolder.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnAddFolder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnAddFolder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnAddFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddFolder.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnFolder;
+            this.btnAddFolder.Location = new System.Drawing.Point(545, 6);
+            this.btnAddFolder.Name = "btnAddFolder";
+            this.btnAddFolder.Size = new System.Drawing.Size(22, 22);
+            this.btnAddFolder.TabIndex = 2;
+            this.btnAddFolder.UseMnemonic = false;
+            this.btnAddFolder.UseVisualStyleBackColor = true;
+            this.btnAddFolder.Click += new System.EventHandler(this.btnAddFolder_Click);
+            // 
             // txtFolder
             // 
             this.txtFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -218,6 +283,25 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Folder to monitor";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Enabled = false;
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnSave.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnSave;
+            this.btnSave.Location = new System.Drawing.Point(396, 189);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(171, 36);
+            this.btnSave.TabIndex = 13;
+            this.btnSave.Text = "SAVE FOLDER SETTINGS";
+            this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtArchiveFolder
             // 
@@ -251,90 +335,6 @@
             this.txtApiEndpoint.Size = new System.Drawing.Size(414, 22);
             this.txtApiEndpoint.TabIndex = 4;
             this.txtApiEndpoint.TextChanged += new System.EventHandler(this.DataChanged);
-            // 
-            // btnClear
-            // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnClear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnClear;
-            this.btnClear.Location = new System.Drawing.Point(555, 84);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(24, 24);
-            this.btnClear.TabIndex = 27;
-            this.tip.SetToolTip(this.btnClear, "Remove ALL folders");
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // btnRemove
-            // 
-            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemove.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnRemove.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnRemove.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemove.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnDelete;
-            this.btnRemove.Location = new System.Drawing.Point(555, 54);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(24, 24);
-            this.btnRemove.TabIndex = 26;
-            this.tip.SetToolTip(this.btnRemove, "Remove selected folder");
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-            // 
-            // btnAddFolder
-            // 
-            this.btnAddFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddFolder.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnAddFolder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnAddFolder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnAddFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddFolder.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnFolder;
-            this.btnAddFolder.Location = new System.Drawing.Point(545, 6);
-            this.btnAddFolder.Name = "btnAddFolder";
-            this.btnAddFolder.Size = new System.Drawing.Size(22, 22);
-            this.btnAddFolder.TabIndex = 2;
-            this.btnAddFolder.UseMnemonic = false;
-            this.btnAddFolder.UseVisualStyleBackColor = true;
-            this.btnAddFolder.Click += new System.EventHandler(this.btnAddFolder_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Enabled = false;
-            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnSave.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnSave;
-            this.btnSave.Location = new System.Drawing.Point(396, 189);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(171, 36);
-            this.btnSave.TabIndex = 13;
-            this.btnSave.Text = "SAVE FOLDER SETTINGS";
-            this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.Image = global::OfficeStruct_Agent_Win.Properties.Resources.btnAddFolder;
-            this.btnAdd.Location = new System.Drawing.Point(555, 25);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(24, 24);
-            this.btnAdd.TabIndex = 23;
-            this.tip.SetToolTip(this.btnAdd, "Add a new folder");
-            this.btnAdd.UseMnemonic = false;
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnUpdateOptions
             // 
