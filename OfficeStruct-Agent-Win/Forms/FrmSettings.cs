@@ -9,6 +9,7 @@ namespace OfficeStruct_Agent_Win.Forms
 {
     public partial class FrmSettings : Form
     {
+        private bool clearing = false;
         private readonly List<MonitoredFolder> items = new List<MonitoredFolder>();
 
         public FrmSettings()
@@ -18,7 +19,7 @@ namespace OfficeStruct_Agent_Win.Forms
             var opt = Shared.Options;
             items = Xml.Deserialize<List<MonitoredFolder>>(Xml.Serialize(opt.Folders));
             UpdateList();
-            cboLevel.DataSource = Enum.GetValues(typeof (LogLevel));
+            cboLevel.DataSource = Enum.GetValues(typeof(LogLevel));
         }
 
         private void UpdateButtons()
@@ -48,7 +49,7 @@ namespace OfficeStruct_Agent_Win.Forms
                 "desktop.ini",
                 "*.tmp");
             txtLogFolder.Text = @"LOG";
-            cboLevel.SelectedValue = LogLevel.Off;
+            cboLevel.SelectedIndex = (int)LogLevel.Normal;
         }
         private void NewItem()
         {
@@ -58,15 +59,34 @@ namespace OfficeStruct_Agent_Win.Forms
 
             txtFolder.Focus();
         }
+        private void ControlsToItem(ref MonitoredFolder mf)
+        {
+            if (mf == null || clearing) return;
+            mf.Folder = txtFolder.Text;
+            mf.DelayBetweenChecks = (int)udDelay.Value;
+            mf.UploadToWebservice = chkUploadToWebservice.Checked;
+            mf.ApiEndpoint = txtApiEndpoint.Text;
+            mf.AuthorizationKey = txtAuthorizationKey.Text;
+            mf.ArchiveFolderName = txtArchiveFolder.Text;
+            mf.Exclusions = txtExclusions.Lines
+                   .Where(l => !String.IsNullOrEmpty(l))
+                   .ToList();
+            mf.LogFolderName = txtLogFolder.Text;
+            mf.LogLevel = (LogLevel)cboLevel.SelectedItem;
+        }
 
         private void lv_SelectionChanged(object sender, EventArgs e)
         {
-            UpdateButtons();
-            ClearItemData();
             var item = lv.SelectedObject as MonitoredFolder;
+            UpdateButtons();
             pnl.Enabled = item != null;
-            if (item == null) return;
+            if (item == null)
+            {
+                ClearItemData();
+                return;
+            }
 
+            clearing = true;
             txtFolder.Text = item.Folder;
             udDelay.Value = Math.Min(Math.Max(udDelay.Minimum, item.DelayBetweenChecks), udDelay.Maximum);
             chkUploadToWebservice.Checked = item.UploadToWebservice;
@@ -75,7 +95,9 @@ namespace OfficeStruct_Agent_Win.Forms
             txtArchiveFolder.Text = item.ArchiveFolderName;
             txtExclusions.Text = String.Join(Environment.NewLine, item.Exclusions);
             txtLogFolder.Text = item.LogFolderName;
-            cboLevel.SelectedValue = item.LogLevel;
+            cboLevel.SelectedIndex = (int)item.LogLevel;
+            clearing = false;
+            DataChanged(sender,e);
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -100,15 +122,9 @@ namespace OfficeStruct_Agent_Win.Forms
 
         private void DataChanged(object sender, EventArgs e)
         {
-            btnSave.Enabled =
-                !String.IsNullOrEmpty(txtFolder.Text)
-                && Directory.Exists(txtFolder.Text)
-                && (!chkUploadToWebservice.Checked ||
-                    (!String.IsNullOrEmpty(txtApiEndpoint.Text)
-                     && (txtApiEndpoint.Text.StartsWith("http://") || txtApiEndpoint.Text.StartsWith("https://"))
-                && !String.IsNullOrEmpty(txtAuthorizationKey.Text)))
-                && txtArchiveFolder.Text.IsValidFilename()
-                && ((LogLevel)cboLevel.SelectedItem == LogLevel.Off || txtLogFolder.Text.IsValidFilename());
+            var item = lv.SelectedObject as MonitoredFolder;
+            ControlsToItem(ref item);
+            btnSave.Enabled = item != null && item.IsValid;
         }
         private void chkUploadToWebservice_CheckedChanged(object sender, EventArgs e)
         {
@@ -139,16 +155,7 @@ namespace OfficeStruct_Agent_Win.Forms
                 UpdateList(item);
                 UpdateButtons();
             }
-
-            item.Folder = txtFolder.Text;
-            item.DelayBetweenChecks = (int)udDelay.Value;
-            item.ApiEndpoint = txtApiEndpoint.Text;
-            item.AuthorizationKey = txtAuthorizationKey.Text;
-            item.ArchiveFolderName = txtArchiveFolder.Text;
-            item.Exclusions = txtExclusions.Lines
-                .Where(l => !String.IsNullOrEmpty(l))
-                .ToList();
-            //NewItem();
+            ControlsToItem(ref item);
         }
 
         private void btnUpdateOptions_Click(object sender, EventArgs e)

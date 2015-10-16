@@ -3,20 +3,20 @@
 OK	1. changes to settings dialog (attachment), and:
 
 OK	1.1. change the default check interval to 5 seconds.
-1.2 Let's add a Log Folder Name option to the folder settings (default it to "LOG")
-1.3 Let's add a 'Log Level' option dropdown (Debug, Normal, Off)
+OK	1.2 Let's add a Log Folder Name option to the folder settings (default it to "LOG")
+OK	1.3 Let's add a 'Log Level' option dropdown (Debug, Normal, Off)
 
 2. changes to popup menu (attachment)
 
-3. add a status dialog (realtime view of recent 100 lines of log messages + any added while dialog is open)
+OK	3. add a status dialog (realtime view of recent 100 lines of log messages + any added while dialog is open)
 
 Also - I want logging added.
 
-4. store logs in month folder (2015-10)
-5. store one log per day (agent.20151022.log)
-6. Trigger a log event for each operation (check, grab file, api call, api response, upload, upload result, hashing, etc...). Flag log event with either Debug or Normal. And then based on folder settings, write to file or not. 
+OK	4. store logs in month folder (2015-10)
+OK	5. store one log per day (agent.20151022.log)
+OK	6. Trigger a log event for each operation (check, grab file, api call, api response, upload, upload result, hashing, etc...). Flag log event with either Debug or Normal. And then based on folder settings, write to file or not. 
 
-HOWEVER, regardless of log settings, show all log events in the status window.
+OK	HOWEVER, regardless of log settings, show all log events in the status window.
 
 Can you add in another checkbox?
-1. "Upload Files To Web Service" (if it is checked, it should enable the URL and Key fields). Default to checked
+OK	1. "Upload Files To Web Service" (if it is checked, it should enable the URL and Key fields). Default to checked

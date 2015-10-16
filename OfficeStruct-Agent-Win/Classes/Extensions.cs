@@ -34,5 +34,10 @@ namespace OfficeStruct_Agent_Win.Classes
             var invChars = Path.GetInvalidFileNameChars();
             return !filename.Any(c => Array.IndexOf(invChars, c) >= 0);
         }
+        public static bool IsValidFolder(this string folder)
+        {
+            return !String.IsNullOrEmpty(folder)
+                   && Directory.Exists(folder);
+        }
     }
 }

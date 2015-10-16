@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,6 +13,8 @@ namespace OfficeStruct_Agent_Win.Forms
     public partial class FrmMain : Form
     {
         private string optName;
+        private FrmStatus status = null;
+        private Dictionary<MonitoredFolder, List<LogItem>> log = new Dictionary<MonitoredFolder, List<LogItem>>();
 
         public FrmMain()
         {
@@ -36,6 +40,7 @@ namespace OfficeStruct_Agent_Win.Forms
             // Options are loaded/created
             optName = Path.Combine(optDir, "options.xml");
             // After options are updated we must update app behaviour
+            mnuEnabled.Checked = true;
             actReloadOptions();
             // Ok, let's check webservice immediately
             PerformCheck();
@@ -43,6 +48,11 @@ namespace OfficeStruct_Agent_Win.Forms
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Shared.Options.Folders.ForEach(f => f.Stop());
+            if (status != null)
+            {
+                status.Close();
+                status = null;
+            }
             // Notification icon must be removed from traybar
             nic.Visible = false;
         }
@@ -53,6 +63,11 @@ namespace OfficeStruct_Agent_Win.Forms
             base.WndProc(ref m);
         }
 
+        private void StopTimers()
+        {
+            if (Shared.Options != null)
+                Shared.Options.Folders.ForEach(f => f.Stop());
+        }
         private void actEditOptions()
         {
             // Opening settings window
@@ -64,8 +79,7 @@ namespace OfficeStruct_Agent_Win.Forms
         }
         private void actReloadOptions()
         {
-            if (Shared.Options != null)
-                Shared.Options.Folders.ForEach(f => f.Stop());
+            StopTimers();
             Shared.Options = Options.Load(optName);
 
             nic.Text = Text;
@@ -73,7 +87,42 @@ namespace OfficeStruct_Agent_Win.Forms
             nic.Visible = true;
 
             mnuCheckNow.Enabled = Shared.Options.Folders.Any(f => f.IsValid);
-            Shared.Options.Folders.ForEach(f => f.Start());
+            log.Clear();
+            Shared.Options.Folders.ForEach(f =>
+            {
+                log.Add(f, new List<LogItem>());
+                f.Start(
+                    (folder, item) =>
+                    {
+                        Trace.WriteLine(String.Format("{0} {1}", item.Date.ToString("HH:mm:ss"), item.Message));
+                        log[folder].Add(item);
+                        UpdateStatusWindow();
+                    });
+                log[f].AddRange(f.LogItems);
+            });
+            UpdateStatusWindow();
+        }
+        private void actViewStatus()
+        {
+            if (status == null)
+            {
+                status = new FrmStatus();
+                status.Closed += (sender, args) =>
+                {
+                    status = null;
+                };
+                UpdateStatusWindow();
+            }
+            status.Show();
+            status.WindowState = FormWindowState.Normal;
+            status.BringToFront();
+        }
+        private void UpdateStatusWindow()
+        {
+            if (status == null) return;
+            status.Update(log
+                .SelectMany(pair => pair.Value)
+                .OrderByDescending(i => i.Date));
         }
         private void ShowNotification(ToolTipIcon icon, string msg, params string[] args)
         {
@@ -82,15 +131,11 @@ namespace OfficeStruct_Agent_Win.Forms
         }
         private void PerformCheck()
         {
+            if (!mnuEnabled.Checked) return;
             var fs = Shared.Options.Folders;
             if (!fs.Any(f => f.IsValid))
             {
                 ShowNotification(ToolTipIcon.Error, "There's no folder with valid settings!");
-                return;
-            }
-            if (!fs.Any(f => f.UploadEnabled))
-            {
-                ShowNotification(ToolTipIcon.Error, "All folders have upload disabled!");
                 return;
             }
             fs.ForEach(f => f.PerformCheck());
@@ -100,9 +145,20 @@ namespace OfficeStruct_Agent_Win.Forms
         {
             actEditOptions();
         }
+        private void mnuEnabled_Click(object sender, EventArgs e)
+        {
+            mnuCheckNow.Visible = mnuEnabled.Checked;
+            if (mnuEnabled.Checked)
+                actReloadOptions();
+            else StopTimers();
+        }
         private void mnuCheckNow_Click(object sender, EventArgs e)
         {
             PerformCheck();
+        }
+        private void mnuViewStatus_Click(object sender, EventArgs e)
+        {
+            actViewStatus();
         }
         private void mnuExit_Click(object sender, EventArgs e)
         {
@@ -111,6 +167,11 @@ namespace OfficeStruct_Agent_Win.Forms
         private void nic_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             PerformCheck();
+        }
+        private void nic_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            actViewStatus();
         }
     }
 }

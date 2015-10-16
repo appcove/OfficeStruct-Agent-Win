@@ -34,29 +34,34 @@
             this.mnu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuOpenOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCheckNow = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuViewStatus = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.mnu.SuspendLayout();
             this.SuspendLayout();
             // 
             // nic
             // 
             this.nic.ContextMenuStrip = this.mnu;
+            this.nic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.nic_MouseClick);
             this.nic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nic_MouseDoubleClick);
             // 
             // mnu
             // 
             this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpenOptions,
+            this.mnuEnabled,
             this.mnuCheckNow,
+            this.mnuViewStatus,
             this.mnuExit});
             this.mnu.Name = "mnu";
-            this.mnu.Size = new System.Drawing.Size(160, 92);
+            this.mnu.Size = new System.Drawing.Size(167, 136);
             // 
             // mnuOpenOptions
             // 
             this.mnuOpenOptions.Image = global::OfficeStruct_Agent_Win.Properties.Resources.edit;
             this.mnuOpenOptions.Name = "mnuOpenOptions";
-            this.mnuOpenOptions.Size = new System.Drawing.Size(159, 22);
+            this.mnuOpenOptions.Size = new System.Drawing.Size(166, 22);
             this.mnuOpenOptions.Text = "Change settings";
             this.mnuOpenOptions.Click += new System.EventHandler(this.mnuOpenOptions_Click);
             // 
@@ -64,17 +69,32 @@
             // 
             this.mnuCheckNow.Image = ((System.Drawing.Image)(resources.GetObject("mnuCheckNow.Image")));
             this.mnuCheckNow.Name = "mnuCheckNow";
-            this.mnuCheckNow.Size = new System.Drawing.Size(159, 22);
+            this.mnuCheckNow.Size = new System.Drawing.Size(166, 22);
             this.mnuCheckNow.Text = "Check now";
             this.mnuCheckNow.Click += new System.EventHandler(this.mnuCheckNow_Click);
+            // 
+            // mnuViewStatus
+            // 
+            this.mnuViewStatus.Name = "mnuViewStatus";
+            this.mnuViewStatus.Size = new System.Drawing.Size(166, 22);
+            this.mnuViewStatus.Text = "View status";
+            this.mnuViewStatus.Click += new System.EventHandler(this.mnuViewStatus_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Image = ((System.Drawing.Image)(resources.GetObject("mnuExit.Image")));
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(159, 22);
+            this.mnuExit.Size = new System.Drawing.Size(166, 22);
             this.mnuExit.Text = "Exit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
+            // 
+            // mnuEnabled
+            // 
+            this.mnuEnabled.CheckOnClick = true;
+            this.mnuEnabled.Name = "mnuEnabled";
+            this.mnuEnabled.Size = new System.Drawing.Size(166, 22);
+            this.mnuEnabled.Text = "Enabled/Disabled";
+            this.mnuEnabled.Click += new System.EventHandler(this.mnuEnabled_Click);
             // 
             // FrmMain
             // 
@@ -99,6 +119,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuOpenOptions;
         private System.Windows.Forms.ToolStripMenuItem mnuCheckNow;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
+        private System.Windows.Forms.ToolStripMenuItem mnuViewStatus;
+        private System.Windows.Forms.ToolStripMenuItem mnuEnabled;
     }
 }
 
