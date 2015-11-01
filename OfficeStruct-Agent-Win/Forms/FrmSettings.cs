@@ -97,7 +97,7 @@ namespace OfficeStruct_Agent_Win.Forms
             txtLogFolder.Text = item.LogFolderName;
             cboLevel.SelectedIndex = (int)item.LogLevel;
             clearing = false;
-            DataChanged(sender,e);
+            DataChanged(sender, e);
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -122,9 +122,9 @@ namespace OfficeStruct_Agent_Win.Forms
 
         private void DataChanged(object sender, EventArgs e)
         {
-            var item = lv.SelectedObject as MonitoredFolder;
+            var item = lv.SelectedObject as MonitoredFolder ?? new MonitoredFolder();
             ControlsToItem(ref item);
-            btnSave.Enabled = item != null && item.IsValid;
+            btnSave.Enabled = item.IsValid;
         }
         private void chkUploadToWebservice_CheckedChanged(object sender, EventArgs e)
         {
